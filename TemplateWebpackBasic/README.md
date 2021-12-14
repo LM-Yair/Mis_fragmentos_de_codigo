@@ -9,7 +9,7 @@ Ejecutar npm i
 Inicia el servidor
 
 ```
-  npm start
+npm start
 ```
 
 Empaqueta el código en modo desarrollo
