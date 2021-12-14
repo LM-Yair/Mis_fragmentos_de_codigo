@@ -6,6 +6,20 @@ Ejecutar npm i
 
 ## Comandos
 
-- npm start ( Inicia el servidor )
-- npm run dev ( Empaqueta el código en modo de desarrollo  )
-- npm run build ( Empaqueta el código en modo producción )
+Inicia el servidor
+
+```
+  npm start
+```
+
+Empaqueta el código en modo desarrollo
+
+```
+npm run dev ( Empaqueta el código en modo de desarrollo  )
+```
+
+Empaqueta el código en modo producción
+
+```
+npm run build ( Empaqueta el código en modo producción )
+```
