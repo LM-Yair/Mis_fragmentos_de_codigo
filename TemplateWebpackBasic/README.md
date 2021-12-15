@@ -15,11 +15,11 @@ npm start
 Empaqueta el código en modo desarrollo
 
 ```
-npm run dev ( Empaqueta el código en modo de desarrollo  )
+npm run dev
 ```
 
 Empaqueta el código en modo producción
 
 ```
-npm run build ( Empaqueta el código en modo producción )
+npm run build
 ```
