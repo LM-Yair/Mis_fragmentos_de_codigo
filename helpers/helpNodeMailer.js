@@ -1,27 +1,58 @@
-const sendEmail = async ({ name, email, options, message }) => {
-  try{
+const sendmail = async ({ name, email, message }) => {
+  try {
+    const emailLayout = get({
+      path: path.join(__dirname, "./email.html"),
+      options: {
+        encoding: "utf-8",
+      },
+    });
+    const emailHtmlReady = emailLayout
+      .replace("${name}", name)
+      .replace("${email}", email)
+      .replace("${message}", message);
+
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
-      secure: true, 
+      secure: true,
       auth: {
-	user: 'ylm508910@gmail.com', 
-	pass: 'kmvributotewhafp', 
+	user: process.env.EMAIL_AUTH_USER, 
+	pass: process.env.EMAIL_AUTH_PASS, 
       },
     });
-    transporter.verify().catch( err => console.error( err ) );
-    await transporter.sendMail({
-      from: `"Portafolio "<${ email }>`, 
-      to: "yairlazaro@outlook.com", 
-      subject: `Portafolio | ${ options }`, 
-      text: `${ message }`, 
-      html: `
-      <h2>De: ${ name }</h2>
-      <h3>${ email }</h3>
-      <p>${ message }</p>`,
-    });
-  }
-  catch( err ){ console.error( err ) };
-}
 
-export default sendEmail;
+    const emailStatus = await transporter.sendMail({
+      from: `${name} - ${email}`,
+      to: ["yairlazaro@outlook.com"],
+      subject: "Portafolio - Contact Form",
+      html: emailHtmlReady,
+    });
+    return {
+      email: {
+        statusCode: 200,
+        statusText: {
+          es: "email enviado",
+          en: "email sent",
+        },
+        messageTime: emailStatus.messageTime,
+        envelopeTime: emailStatus.envelopeTime,
+        messageSize: emailStatus.messageSize,
+      },
+    };
+  } catch (err) {
+    throw {
+      statusCode: 500,
+      email: {
+        statusText: {
+          es: "El email no pudo ser enviado",
+          en: "the email cannot be sent",
+        },
+        error: err,
+      },
+    };
+  }
+};
+
+module.exports = {
+  sendmail,
+};
